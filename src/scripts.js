@@ -1,3 +1,60 @@
+class ToDoList{
+    constructor(){
+        this.tasks = [
+        {task: 'Go to Dentist', isComplete: false},
+        {task: 'Do Gardening', isComplete: true},
+        {task: 'Renew Library Account', isComplete: false}
+    ];
+    
+    this.loadTasks = this.loadTasks.bind(this);
+    this.loadTasks();
+
+
+}
+
+ generateTaskHtml(task, index) {
+    return `
+      <li class="list-group-item checkbox">
+        <div class="row">
+          <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 checkbox">
+            <label><input id="toggleTaskStatus" type="checkbox" value="" class="" 
+            ${task.isComplete ?"checked":""}
+            onchange ="toDo.toggleTaskStatus (${index})"> 
+            </label>
+          </div>
+          <div class="col-md-10 col-xs-10 col-lg-10 col-sm-10 task-text ${task.isComplete ?"complete":""}">
+          ${task.task}
+          </div>
+          <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 delete-icon-area">
+            <a class="" href="/"onclick="toDo.deleteTask(event, ${index}) ><i id="deleteTask" class="delete-icon glyphicon glyphicon-trash"></i></a>
+          </div>
+        </div>
+      </li>
+    `;
+ }
+
+ loadTasks(){
+     let taskHtml = this.tasks.reduce(
+        (html, task, index) => html += this.generateTaskHtml(task, index), 
+        '');
+    document.getElementById("taskList").innerHTML = taskHtml;
+    }
+
+    toggleTaskStatus(taskIndex){
+        this.tasks[taskIndex].isComplete = !this.tasks[taskIndex].isComplete
+        this.loadTasks();
+  
+    }
+
+    deleteTask(event, index){
+
+
+        this.loadTasks();
+
+    }
+
+ 
+}
 /*  Create a class called ToDoList
     PART 1 - Show the tasks
     -   Add a constructor
@@ -9,6 +66,8 @@
                 {task: 'Renew Library Account', isComplete: false},
             ]
         -   call the method loadTasks
+
+
 
     -   Add the generateTaskHtml method (copy from below)
         -   This method generates the html for ONE task in the array
@@ -85,8 +144,10 @@
     Add a window on load event handler that instantiates a ToDo object.  
     Use and arrow or anonymous function
 */
+let toDo;
+window.onload = () => {toDo = new ToDoList}
 
-function generateTaskHtml(task, index) {
+/* function generateTaskHtml(task, index) {
     return `
       <li class="list-group-item checkbox">
         <div class="row">
@@ -101,6 +162,6 @@ function generateTaskHtml(task, index) {
           </div>
         </div>
       </li>
-    `;
-}
+    `; */
+
 
