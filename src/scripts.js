@@ -26,7 +26,7 @@ class ToDoList{
           ${task.task}
           </div>
           <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 delete-icon-area">
-            <a class="" href="/"onclick="toDo.deleteTask(event, ${index}) ><i id="deleteTask" class="delete-icon glyphicon glyphicon-trash"></i></a>
+            <a class="" href="/" onclick="toDo.deleteTask(event, ${index})" ><i id="deleteTask" data-id= "${index}" class="delete-icon glyphicon glyphicon-trash"></i></a>
           </div>
         </div>
       </li>
@@ -34,10 +34,10 @@ class ToDoList{
  }
 
  loadTasks(){
-     let taskHtml = this.tasks.reduce(
+     let tasksHtml = this.tasks.reduce(
         (html, task, index) => html += this.generateTaskHtml(task, index), 
         '');
-    document.getElementById("taskList").innerHTML = taskHtml;
+    document.getElementById('taskList').innerHTML = tasksHtml;
     }
 
     toggleTaskStatus(taskIndex){
@@ -46,11 +46,31 @@ class ToDoList{
   
     }
 
-    deleteTask(event, index){
-
-
+    deleteTask(event, taskIndex){
+        event.preventDefault();
+        this.tasks.splice(taskIndex, 1);
         this.loadTasks();
+    }
+   
+    addTaskClick(){
+        let target = document.getElementById('addTask');
+        this.addTaskClick(target.value);
+        target.value = ""
 
+    }
+    addTask(task){
+        let newTask = {
+            task, isComplete : false
+        };
+        let parentDiv =document.getElementById('addTask').parentElement;
+        if(task == ''){
+            parentDiv.classList.add('has-error');
+        }
+        else{
+            parentDiv.classList.remove('has-error');
+            this.tasks.push(newTask);
+            this.loadTasks();
+        }
     }
 
  
