@@ -76,9 +76,7 @@ class ToDoList{
             this.loadTasks();
         }
     }
-
- 
-}
+ }
 let toDo;
 window.onload = () => {toDo = new ToDoList}
 /*  Create a class called ToDoList
