@@ -10,8 +10,6 @@ class ToDoList{
 } 
     this.loadTasks = this.loadTasks.bind(this);
     this.loadTasks();
-
-
 }
 
  generateTaskHtml(task, index) {
